@@ -207,8 +207,8 @@ public class LineWars {
 				
 				
 				// is enough firepower
-				if (playerFirepower - useFirepower >= 0) {
-					playerFirepower -= useFirepower;
+				if (enemyFirepower - useFirepower >= 0) {
+					enemyFirepower -= useFirepower;
 					
 					
 					killedSoldiers = damage(enemySoldierCount, playerLocation, enemyLocation);
