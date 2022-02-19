@@ -108,10 +108,11 @@ public class LineWars {
 			}
 			
 			case "b" -> {
-				playerFirepower = Math.min(2500, playerFirepower + 250);
 				dice = (rnd.nextInt(3) + 1);
+				playerFirepower = Math.min(2500, playerFirepower + 250 * dice);
 				playerLocation += move('-', dice, playerLocation);
-				System.out.printf(" * Player rolled (%d) and is now at position: |%d|\n", dice, playerLocation);
+				System.out.printf(" * Player rolled (%d) and got (%d) x 250 new firepower as he moved back and is now at position: |%d|\n", dice, dice, playerLocation);
+				System.out.printf("    currently has (%d) firepower\n", playerFirepower);
 				
 				printBoard(scout(playerLocation, enemyLocation, '-', "the Enemy"));
 			}
@@ -140,10 +141,10 @@ public class LineWars {
 					System.out.println(" * Not enough firepower");
 				}
 			}
-		
+			
 		}
 		
-		// reset playerChoose
+		// reset playerAction
 		playerAction = "None";
 		
 	}
@@ -184,7 +185,6 @@ public class LineWars {
 				enemyLocation += move('-', dice, enemyLocation);
 				System.out.printf(" * Enemy  rolled (?)-dice and moved forward |%3d|\n", enemyLocation);
 				
-				
 				if (scout(playerLocation, enemyLocation, '-', "the Enemy")) {
 					printBoard(true);
 				}
@@ -194,8 +194,8 @@ public class LineWars {
 				enemyFirepower = Math.min(2500, enemyFirepower + 250);
 				dice = (rnd.nextInt(3) + 1);
 				enemyLocation += move('+', dice, enemyLocation);
-				System.out.printf(" * Enemy  rolled (?)-dice and moved backwards %d\n", enemyLocation);
-				
+				System.out.printf(" * Enemy  rolled (?)-dice, moved backwards and got new firepower %d\n", enemyLocation);
+				// Player rolled (%d) and got (%d) x 250 new firepower as he moved back and is now at position: |%d|\n", dice, dice,
 				if (scout(playerLocation, enemyLocation, '-', "the Enemy")) {
 					printBoard(true);
 				}
@@ -231,8 +231,10 @@ public class LineWars {
 	
 	public void SetupGame() {
 		// print game-rules
-		System.out.println("- - L I N E - \\\\/\\\\/ A R S - -\n");
-		System.out.println("The rules are as follows:");
+		System.out.println(" ".repeat(29) + "- - L I N E  -  \\\\/\\\\/ A R S - -");
+		printBoard(true);
+		
+		System.out.println("\nThe rules are as follows:");
 		System.out.println("- This is a One-dimensional game-board with 21 fields [-10..10] where the players base is -10 and the enemies is 10");
 		System.out.println("- Win by Killing all the soldiers of the enemy or plant a bomb in enemy base.");
 		System.out.println("- Each one starts with 25 soldiers and 2500 firepower");
