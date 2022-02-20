@@ -84,12 +84,12 @@ public class LineWars {
 		
 	}
 	
-	public void playerTurn() { // TODO print enemy always to see movement
+	public void playerTurn() {
 		// enables free action or onetime action
 		while (playerAction.equals("None") || playerAction.equals("p")) {
 			
 			// player choose action
-			System.out.print("\n- Choose your move? [f]orward, [b]ackwards, [a]ttack or [p]rint game for free: ");
+			System.out.print("\n- Choose your move? [f]orward, [b]ackwards, [a]ttack or [p]rint game-board for free: ");
 			playerAction = in.nextLine();
 			
 			// enable free selection
@@ -179,11 +179,11 @@ public class LineWars {
 			}
 		}
 		
-		switch (enemyState) { //TODO remove reveal position
+		switch (enemyState) {
 			case "f" -> {
 				dice = (rnd.nextInt(2) + 1);
 				enemyLocation += move('-', dice, enemyLocation);
-				System.out.printf(" * Enemy  rolled (?)-dice and moved forward |%3d|\n", enemyLocation);
+				System.out.printf(" * Player rolled (%d) and is now at position: |%d|\n", dice, enemyLocation);
 				
 				if (scout(playerLocation, enemyLocation, '-', "the Enemy")) {
 					printBoard(true);
@@ -194,7 +194,7 @@ public class LineWars {
 				enemyFirepower = Math.min(2500, enemyFirepower + 250);
 				dice = (rnd.nextInt(3) + 1);
 				enemyLocation += move('+', dice, enemyLocation);
-				System.out.printf(" * Enemy  rolled (?)-dice, moved backwards and got new firepower %d\n", enemyLocation);
+				System.out.printf(" * Enemy rolled (%d) and got (%d) x 250 new firepower as he moved back and is now at position: |%d|\n", dice, dice, enemyLocation);
 				// Player rolled (%d) and got (%d) x 250 new firepower as he moved back and is now at position: |%d|\n", dice, dice,
 				if (scout(playerLocation, enemyLocation, '-', "the Enemy")) {
 					printBoard(true);
@@ -211,14 +211,14 @@ public class LineWars {
 					enemyFirepower -= useFirepower;
 					
 					
-					killedSoldiers = damage(enemySoldierCount, playerLocation, enemyLocation);
-					enemySoldierCount -= killedSoldiers;
+					killedSoldiers = damage(playerSoldierCount, playerLocation, enemyLocation);
+					playerSoldierCount -= killedSoldiers;
 					
 					if (distance() >= 6) {
 						System.out.println(" * Enemy soldiers attack but kills none of the players soldiers as the distance to them is 6 or more\n");
 					} else {
 						System.out.printf(" * Enemy soldiers attacks and kills //%d// of the players soldiers as the distance to them is |%d|\n", killedSoldiers, distance());
-						System.out.printf("    The player now has //%d// soldiers\n", enemySoldierCount);
+						System.out.printf("    The player now has //%d// soldiers\n", playerSoldierCount);
 					}
 					
 				} else {
